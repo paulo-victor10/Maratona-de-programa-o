@@ -10,7 +10,7 @@ int main(){
     {
         cout<<i<<" ";
     }
-
+    
     for (int i = 1; i <= n-k; i++)
     {
         cout<<i<<" ";

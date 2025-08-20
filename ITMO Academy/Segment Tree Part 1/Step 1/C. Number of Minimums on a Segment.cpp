@@ -1,5 +1,3 @@
-//Wrong answer on test 12
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -40,30 +38,23 @@ void build(int p, int l, int r)
     }
 }
 
-int query(int p, int l, int r, int i, int j)
+pair<int, int> query(int p, int l, int r, int i, int j) //a query retorna um par{menor elemento, qtd de vezes que ele aparece}
 {
     if (r < i or j < l)
-        return INF;
+        return {INF, 0};
 
     if (i <= l and r <= j)
-        return st[p];
+        return {st[p], st_qtd[p]};
 
     int m = (l + r) / 2;
-    int x = query(2 * p, l, m, i, j);
-    int y = query(2 * p + 1, m + 1, r, i, j);
+    pair<int, int> x, y;
+    x = query(2 * p, l, m, i, j);
+    y = query(2 * p + 1, m + 1, r, i, j);
+
+    if(x.first==y.first){
+        return {x.first,x.second+y.second};
+    }
     return min(x, y);
-}
-
-int query_qtd(int p, int l, int r, int i, int j)
-{
-    if (r < i or j < l)
-        return 0;
-    if (i <= l and r <= j)
-        return st_qtd[p];
-    int x = query_qtd(2 * p, l, (l + r) / 2, i, j);
-    int y = query_qtd(2 * p + 1, (l + r) / 2 + 1, r, i, j);
-
-    return x + y;
 }
 
 void update(int p, int l, int r, int x, int v)
@@ -124,9 +115,9 @@ int main()
         {
             int left, right;
             cin >> left >> right;
-            ll ans1 =     query(1, 0, n - 1, left, right - 1);
-            ll ans2 = query_qtd(1, 0, n - 1, left, right - 1);
-            cout << ans1 << " " << ans2 << "\n";
+            auto ans = query(1, 0, n - 1, left, right - 1);
+
+            cout << ans.first << " " << ans.second << "\n";
         }
     }
 }

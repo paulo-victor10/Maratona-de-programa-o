@@ -130,11 +130,13 @@ int main()
 
     build(1, 0, n - 1);
     cout << query(1, 0, n - 1, 0, n - 1) << "\n";
+    //cout<<st[1][1]<<"\n";
     while (m--)
     {
         ll i, v;
         cin >> i >> v;
         update(1, 0, n - 1, i, v);
         cout << query(1, 0, n - 1, 0, n - 1) << "\n";
+        //cout<<st[1][1]<<"\n";
     }
 }
